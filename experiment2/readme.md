@@ -1,4 +1,4 @@
-#h1 questions
+# questions
 
 create table deposit with columns accno number(3),name varchar(12),bname char(2),bname number(6)
 
