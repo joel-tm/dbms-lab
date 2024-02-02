@@ -1,0 +1,36 @@
+1)SQL> Create table deposit9438
+(
+ACCNUMBER NUMBER(3),
+NAME VARCHAR2(10),
+BNAME CHAR(2),
+BALANCE NUMBER(6)
+);
+Table created.
+
+a) SQL> desc deposit9438;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ACCNUMBER                                       NUMBER(3)
+ NAME                                                    VARCHAR2(10)
+ BNAME                                                 CHAR2(2)
+ BALANCE                                             NUMBER(6)
+
+b)SQL> Alter table deposit9438 add(LDATE DATE,ACTYPE CHAR(1));
+Table altered.
+
+
+c) SQL> Alter table deposit9438 add PRIMARY KEY(ACCNUMBER);
+Table altered.
+
+
+d)SQL> ALTER TABLE deposit9438 DROP COLUMN ACTYPE;
+Table altered.
+
+SQL> DESC DEPOSIT9438;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ ACCNUMBER                        NOT NULL  NUMBER(3)
+ NAME                                                         VARCHAR2(10)
+ BNAME                                                       CHAR(2)
+ BALANCE                                                   NUMBER(6)
+ LDATE                                                        DATE
