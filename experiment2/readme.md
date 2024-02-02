@@ -1,3 +1,5 @@
+#h1 questions
+
 create table deposit with columns accno number(3),name varchar(12),bname char(2),bname number(6)
 
 a)display the structure of deposit table
