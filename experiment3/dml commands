@@ -1,1 +1,20 @@
+1)
+INSERT INTO loan9438 VALUES(200, 'anil', 'b1', 25000, '10-oct-14');
+INSERT INTO loan9438 VALUES(202, 'meena', 'b3', 50000, '18-feb-15');
+INSERT INTO loan9438 VALUES(203, 'rani', 'b2', 18000, '23-mar-15');
+INSERT INTO loan9438 VALUES(204, 'reena', 'b2', 17000, '27-may-15') 
 
+a)alter table loan9438 modify amount number(6);
+b)alter table loan9438 add constraint checkconstraint check(amount between 1000 and 100000);
+
+2)INSERT INTO deposit9438  values(100, 'Anil', 'b1', 8000, '10-may-15');
+
+INSERT INTO deposit9438 values(101, 'jose', 'b1', 17000, '17-jun-15');
+
+INSERT INTO deposit9438 values(102, 'sheela', 'b2', 6000, '18-oct-14');
+
+INSERT INTO deposit9438 values(103, 'meena', 'b3', 9000, '10-jan-14');
+
+INSERT INTO deposit9438 values(104, 'rajan', 'b2', 5000, '12-apr-15');
+
+ INSERT INTO deposit9438 values(105, 'kumar', 'b1', 14000, '25-may-15');
