@@ -1,0 +1,106 @@
+SQL> SELECT NAME FROM deposit9295 UNION SELECT NAME FROM loan9295;
+
+NAME
+---------------
+Anil
+Jose
+Joseph
+Kumar
+Meena
+Rajan
+Rani
+Reena
+Sheela
+
+9 rows selected.
+
+SQL> SELECT NAME FROM deposit9295 UNION ALL SELECT NAME FROM loan9295;
+
+NAME
+---------------
+Anil
+Jose
+Sheela
+Meena
+Rajan
+Kumar
+Anil
+Joseph
+Meena
+Rani
+Reena
+
+11 rows selected.
+
+SQL> SELECT NAME FROM deposit9295 INTERSECT SELECT NAME FROM loan9295;
+
+NAME
+---------------
+Anil
+Meena
+
+SQL> SELECT NAME FROM deposit9295 MINUS SELECT NAME FROM loan9295;
+
+NAME
+---------------
+Jose
+Kumar
+Rajan
+Sheela
+
+SQL> select *from deposit9295 d inner join loan9295 l on d.name=l.name and d.bname=l.bname;
+
+    ACC_NO NAME            BNAME              BALANCE LDATE        LOAN_NO NAME            BNAME               AMOUNT LLDATE
+---------- --------------- --------------- ---------- --------- ---------- --------------- --------------- ---------- ---------
+       100 Anil            b1                    8000 10-MAY-15        200 Anil            b1                   25000 10-OCT-14
+       103 Meena           b3                    9000 10-JAN-14        202 Meena           b3                   50000 18-FEB-15
+
+
+SQL>SQL>  SELECT * FROM deposit9295 d LEFT JOIN loan9295 l ON d.NAME = l.NAME AND d.BNAME = l.BNAME;
+
+    ACC_NO NAME            BNAME              BALANCE LDATE        LOAN_NO NAME            BNAME               AMOUNT LLDATE
+---------- --------------- --------------- ---------- --------- ---------- --------------- --------------- ---------- ---------
+       100 Anil            b1                    8000 10-MAY-15        200 Anil            b1                   25000 10-OCT-14
+       103 Meena           b3                    9000 10-JAN-14        202 Meena           b3                   50000 18-FEB-15
+       101 Jose            b1                   17000 17-JUN-15
+       102 Sheela          b2                    6000 18-OCT-14
+       104 Rajan           b2                    5000 24-MAY-15
+       105 Kumar           b1                   14000 25-MAY-15
+
+6 rows selected.
+
+
+SQL> SELECT * FROM deposit9295 d RIGHT JOIN loan9295 l ON d.NAME = l.NAME AND d.BNAME = l.BNAME;
+
+    ACC_NO NAME            BNAME              BALANCE LDATE        LOAN_NO NAME            BNAME               AMOUNT LLDATE
+---------- --------------- --------------- ---------- --------- ---------- --------------- --------------- ---------- ---------
+       100 Anil            b1                    8000 10-MAY-15        200 Anil            b1                   25000 10-OCT-14
+       103 Meena           b3                    9000 10-JAN-14        202 Meena           b3                   50000 18-FEB-15
+                                                                       201 Joseph          b1                   30000 11-MAR-14
+                                                                       203 Rani            b2                   18000 23-MAR-15
+                                                                       204 Reena           b2                   17000 27-MAY-15
+
+
+SQL> SELECT * FROM deposit9295 d FULL JOIN loan9295 l ON d.NAME = l.NAME AND d.BNAME = l.BNAME;
+
+    ACC_NO NAME            BNAME              BALANCE LDATE        LOAN_NO NAME            BNAME               AMOUNT LLDATE
+---------- --------------- --------------- ---------- --------- ---------- --------------- --------------- ---------- ---------
+       100 Anil            b1                    8000 10-MAY-15        200 Anil            b1                   25000 10-OCT-14
+       103 Meena           b3                    9000 10-JAN-14        202 Meena           b3                   50000 18-FEB-15
+       101 Jose            b1                   17000 17-JUN-15
+       102 Sheela          b2                    6000 18-OCT-14
+       104 Rajan           b2                    5000 24-MAY-15
+       105 Kumar           b1                   14000 25-MAY-15
+                                                                       203 Rani            b2                   18000 23-MAR-15
+                                                                       204 Reena           b2                   17000 27-MAY-15
+                                                                       201 Joseph          b1                   30000 11-MAR-14
+
+9 rows selected.
+
+
+
+
+
+
+
+
