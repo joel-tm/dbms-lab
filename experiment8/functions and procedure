@@ -1,0 +1,50 @@
+create table STOCK23(ITEMNO number(3),INAME varchar(32), QTY number(6));
+
+Table created.
+
+insert all
+into STOCK23 values(100, 'Alchemist', 10)
+into STOCK23 values(101, 'Prisoner of Azkaban', 25)
+into STOCK23 values(102, 'Hobbit', 5)
+into STOCK23 values(103, 'Screaming Staircase', 32)
+into STOCK23 values(104, 'DaVinci Code', 16)
+select * from dual;
+
+5 rows created.
+
+select * from STOCK23;
+
+    ITEMNO INAME                                   QTY
+---------- -------------------------------- ----------
+       100 Alchemist                                10
+       101 Prisoner of Azkaban                      25
+       102 Hobbit                                    5
+       103 Screaming Staircase                      32
+       104 DaVinci Code                             16
+
+set serveroutput ON;
+DECLARE
+	ino STOCK23.ITEMNO%type := &item_no;
+	q number(6) := &quantity;
+	name STOCK23.INAME%type;
+	opt varchar(8) := '&option';
+	q1 number(6);
+BEGIN
+	select QTY into q1 from STOCK23 where ITEMNO = ino;
+	if (opt = 'issue') then
+		if (q <= q1) then
+			update STOCK23 set QTY = q1 - q where ITEMNO = ino;
+			select INAME, QTY into name, q from STOCK23 where ITEMNO = ino;
+			dbms_output.put_line('After update : '||ino||' '||name||' '||q);
+		else
+			dbms_output.put_line('Issue exceeds existing quantity of '|| q1);
+		end if;
+	elsif (opt = 'receipt') then
+		update STOCK23 set QTY = q1 + q where ITEMNO = ino;
+		select INAME, QTY into name, q from STOCK23 where ITEMNO = ino;
+		dbms_output.put_line('After update : '||ino||' '||name||' '||q);
+	else
+		dbms_output.put_line('Invalid option');
+	end if;
+END;
+/
