@@ -1,0 +1,181 @@
+SQL> CREATE TABLE empl9295 (
+  2   eno NUMBER,
+  3   name VARCHAR2(10),
+  4   desgn VARCHAR2(15),
+  5   street VARCHAR2(7),
+  6   city VARCHAR2(5),
+  7   mngrno NUMBER
+  8  );
+
+Table created.
+
+SQL> INSERT INTO empl9295 VALUES (100, 'Leela', 'Supdt', 'S1', 'C1', 100);
+
+1 row created.
+
+SQL> INSERT INTO empl9295 VALUES (101, 'Rajan', 'Salesman', 'S2', 'C1', 101);
+
+1 row created.
+
+SQL> INSERT INTO empl9295 VALUES (102, 'Jos', 'Salesman', 'S1', 'C2', 101);
+
+1 row created.
+
+SQL> INSERT INTO empl9295 VALUES (103, 'Anil', 'Sysadm', 'S3', 'C1', 103);
+
+1 row created.
+
+SQL> INSERT INTO empl9295 VALUES (104, 'Kumar', 'Programmer', 'S3', 'C1', 103);
+
+1 row created.
+
+SQL> INSERT INTO empl9295 VALUES (105, 'Meena', 'Clerk', 'S2', 'C1', 101);
+
+1 row created.
+
+SQL> INSERT INTO empl9295 VALUES (106, 'Anup', 'Clerk', 'S1', 'C2', 100);
+
+1 row created.
+
+SQL> INSERT INTO empl9295 VALUES (107, 'Usha', 'Programmer', 'S2', 'C2', 103);
+
+1 row created.
+
+SQL> CREATE TABLE works9295 (
+  2              eno NUMBER,
+  3              cname VARCHAR2(20),
+  4              salary NUMBER
+  5       );
+
+Table created.
+
+SQL> INSERT INTO works9295 VALUES (100, 'ABC COMPANY', 10000);
+
+1 row created.
+
+SQL> INSERT INTO works9295 VALUES (101, 'PQR ASSOCIATES', 22000);
+
+1 row created.
+
+SQL> INSERT INTO works9295 VALUES (102, 'PQR ASSOCIATES', 19000);
+
+1 row created.
+
+SQL> INSERT INTO works9295 VALUES (103, 'PQR ASSOCIATES', 25000);
+
+1 row created.
+
+SQL> INSERT INTO works9295 VALUES (104, 'PQR ASSOCIATES', 15000);
+
+1 row created.
+
+SQL> INSERT INTO works9295 VALUES (105, 'ABC COMPANY', 17600);
+
+1 row created.
+
+SQL> INSERT INTO works9295 VALUES (106, 'ABC COMPANY', 9000);
+
+1 row created.
+
+SQL> INSERT INTO works9295 VALUES (107, 'PQR ASSOCIATES', 11800);
+
+1 row created.
+
+SQL> CREATE TABLE company9295 (
+  2            cname VARCHAR2(20),
+  3            city VARCHAR2(5)
+  4       );
+
+Table created.
+
+SQL> INSERT INTO company9295 VALUES ('ABC COMPANY', 'C1');
+
+1 row created.
+
+SQL> INSERT INTO company9295 VALUES ('PQR ASSOCIATES', 'C2');
+
+1 row created.
+
+SQL> SELECT name FROM empl9295 WHERE eno IN (SELECT mngrno FROM empl9295);
+
+NAME
+----------
+Leela
+Rajan
+Anil
+
+SQL> SELECT COUNT(*) AS num FROM empl9295 WHERE mngrno = (SELECT eno FROM empl9295 WHERE name = 'Anil');
+
+       NUM
+----------
+         3
+
+SQL> SELECT name, desgn FROM empl9295 WHERE eno IN (SELECT eno FROM works9295 WHERE salary = (SELECT MAX(salary) FROM works9295));
+
+NAME       DESGN
+---------- ---------------
+Anil       Sysadm
+
+SQL> SELECT cname FROM works9295 WHERE eno = (SELECT eno FROM empl9295 WHERE name = 'Meena');
+
+CNAME
+--------------------
+ABC COMPANY
+
+SQL> SELECT * FROM empl9295 WHERE eno IN (SELECT DISTINCT mngrno FROM empl9295);
+
+       ENO NAME       DESGN           STREET  CITY      MNGRNO
+---------- ---------- --------------- ------- ----- ----------
+       100 Leela      Supdt           S1      C1           100
+       101 Rajan      Salesman        S2      C1           101
+       103 Anil       Sysadm          S3      C1           103
+
+SQL> SELECT *FROM empl9295 WHERE eno IN (SELECT eno FROM works9295 WHERE cname = 'ABC COMPANY' AND salary > (SELECT AVG(salary) FROM works9295 WHERE cname = 'ABC COMPANY'));
+
+       ENO NAME       DESGN           STREET  CITY      MNGRNO
+---------- ---------- --------------- ------- ----- ----------
+       105 Meena      Clerk           S2      C1           101
+
+SQL> SELECT *FROM empl9295 WHERE eno IN (SELECT eno FROM works9295 WHERE salary > ALL (SELECT salary FROM works9295 WHERE cname = 'ABC COMPANY'));
+
+       ENO NAME       DESGN           STREET  CITY      MNGRNO
+---------- ---------- --------------- ------- ----- ----------
+       101 Rajan      Salesman        S2      C1           101
+       102 Jos        Salesman        S1      C2           101
+       103 Anil       Sysadm          S3      C1           103
+
+SQL> SELECT name, street, city FROM empl9295 WHERE eno IN (SELECT eno FROM works9295 WHERE cname = 'PQR ASSOCIATES' AND salary > 1000);
+
+NAME       STREET  CITY
+---------- ------- -----
+Rajan      S2      C1
+Jos        S1      C2
+Anil       S3      C1
+Kumar      S3      C1
+Usha       S2      C2
+
+SQL> SELECT cname FROM works9295 GROUP BY cname HAVING COUNT(*) >= ALL (SELECT COUNT(*) FROM works9295 GROUP BY cname);
+
+CNAME
+--------------------
+PQR ASSOCIATES
+
+SQL> SELECT * FROM empl9295 E WHERE (CITY, MNGRNO) IN (SELECT CITY, ENO FROM empl9295 M WHERE E.MNGRNO = M.ENO);
+
+       ENO NAME       DESGN           STREET  CITY      MNGRNO
+---------- ---------- --------------- ------- ----- ----------
+       100 Leela      Supdt           S1      C1           100
+       105 Meena      Clerk           S2      C1           101
+       101 Rajan      Salesman        S2      C1           101
+       104 Kumar      Programmer      S3      C1           103
+       103 Anil       Sysadm          S3      C1           103
+
+SQL> SELECT * FROM empl9295 E WHERE (STREET, CITY,MNGRNO) IN (SELECT STREET, CITY, ENO FROM empl9295 M WHERE E.MNGRNO = M.ENO);
+
+       ENO NAME       DESGN           STREET  CITY      MNGRNO
+---------- ---------- --------------- ------- ----- ----------
+       100 Leela      Supdt           S1      C1           100
+       105 Meena      Clerk           S2      C1           101
+       101 Rajan      Salesman        S2      C1           101
+       104 Kumar      Programmer      S3      C1           103
+       103 Anil       Sysadm          S3      C1           103
