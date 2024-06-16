@@ -1,0 +1,142 @@
+SQL> CREATE TABLE Suppliers9295 (
+  2      SUPNO VARCHAR(6) PRIMARY KEY,
+  3      NAME VARCHAR(6),
+  4      CITY VARCHAR(6)
+  5  );
+
+Table created.
+
+SQL> CREATE TABLE Parts9295 (
+  2      PARTNO VARCHAR(6) PRIMARY KEY,
+  3      SUPNO VARCHAR(6),
+  4      QTY INT,
+  5      FOREIGN KEY (SUPNO) REFERENCES Suppliers9295(SUPNO)
+  6  );
+
+Table created.
+
+SQL> INSERT INTO Suppliers9295 values('S1','N1','C1');
+
+1 row created.
+
+SQL> INSERT INTO Suppliers9295 values('S2','N2','C1');
+
+1 row created.
+
+SQL> INSERT INTO Suppliers9295 values('S3','N3','C2');
+
+1 row created.
+
+SQL> INSERT INTO Suppliers9295 values('S4','N4','C2');
+
+1 row created.
+
+SQL> INSERT INTO Suppliers9295 values('S5','N5','C3');
+
+1 row created.
+
+SQL> INSERT INTO Parts9295 values('P1','S1',100);
+
+1 row created.
+
+SQL> INSERT INTO Parts9295 values('P2','S2',200);
+
+1 row created.
+
+SQL> INSERT INTO Parts9295 values('P3','S3',150);
+
+1 row created.
+
+SQL> INSERT INTO Parts9295 values('P4','S1',250);
+
+1 row created.
+
+SQL> INSERT INTO Parts9295 values('P5','S4',115);
+
+1 row created.
+
+SQL> INSERT into SUPPLIERS9295 values('S6','N6','C2');
+
+1 row created.
+
+SQL> INSERT into PARTS9295 values('P6','S2',300);
+
+1 row created.;
+
+SQL> INSERT into PARTS9295 values('P7','S8',400);
+INSERT into PARTS9295 values('P7','S8',400)
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SCOTT.SYS_C005539) violated - parent key not
+found
+
+SQL> delete from SUPPLIERS9295 where SUPNO = 'S5';
+
+1 row deleted.
+
+SQL> delete from PARTS9295 where PARTNO = 'P6';
+
+delete from SUPPLIERS9295 where SUPNO = 'S1';
+
+SQL> delete from SUPPLIERS9295 where SUPNO = 'S1';
+delete from SUPPLIERS9295 where SUPNO = 'S1'
+*
+ERROR at line 1:
+ORA-02292: integrity constraint (SCOTT.SYS_C005539) violated - child record
+found
+
+SQL> update PARTS9295 set QTY = 140 where PARTNO = 'P5';
+
+1 row updated.
+
+SQL> update SUPPLIERS9295 set CITY = 'C8' where SUPNO = 'S2';
+
+1 row updated.
+
+SQL> update PARTS9295 set SUPNO = 'S9' where PARTNO = 'P5';
+update PARTS9295 set SUPNO = 'S9' where PARTNO = 'P5'
+*
+ERROR at line 1:
+ORA-02291: integrity constraint (SCOTT.SYS_C005539) violated - parent key not
+found
+
+SQL> create index SUPNO9295 on SUPPLIERS9295(SUPNO);
+create index SUPNO9295 on SUPPLIERS9295(SUPNO)
+                                        *
+ERROR at line 1:
+ORA-01408: such column list already indexed
+
+SQL> create index NAME9295 on SUPPLIERS9295(NAME);
+
+Index created.
+
+
+SQL> CREATE SEQUENCE CSSEQ9295
+  2    START WITH 3000
+  3    INCREMENT BY 1
+  4    MAXVALUE 4000
+  5    NOCYCLE;
+
+Sequence created.
+
+SQL> create table CSSTUDENTS9295(ROLLNO varchar(8), NAME varchar(25));
+
+Table created.
+
+SQL> insert into CSSTUDENTS9295 values(concat('SCMS',CSSEQ9295.nextval),'ANIL');
+
+1 row created.
+
+SQL> insert into CSSTUDENTS9295 values(concat('SCMS',CSSEQ9295.nextval),'JOSE');
+
+1 row created.
+
+SQL> insert into CSSTUDENTS9295 values(concat('SCMS',CSSEQ9295.nextval),'MEENA');
+
+1 row created.
+
+SQL> insert into CSSTUDENTS9295 values(concat('SCMS',CSSEQ9295.nextval),'KUMAR');
+
+1 row created.
+
+
