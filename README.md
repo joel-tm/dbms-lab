@@ -1,6 +1,7 @@
 # dbms-lab
 done using sql and pl/sql
-done in oracle sql plus
+
+platform-oracle sql plus
 
 
 <a href='https://github.com/joel-tm/dbms-lab/tree/main/experiment2'>basic DDL COMMANDS</a> 
