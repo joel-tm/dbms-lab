@@ -1,0 +1,51 @@
+CREATE TABLE account (
+    account_no NUMBER PRIMARY KEY,
+    deposit NUMBER,
+    period NUMBER,
+    balance NUMBER
+);
+
+INSERT INTO account  VALUES (1, 10000, 2, 9000);
+INSERT INTO account  VALUES (2, 20000, 3, 15000);
+INSERT INTO account  VALUES (3, 30000, 4, 25000);
+INSERT INTO account  VALUES (4, 40000, 5, 35000);
+INSERT INTO account  VALUES (5, 50000, 6, 45000);
+
+DECLARE 
+    acc_no NUMBER;
+    deposit NUMBER;
+    period NUMBER;
+    balance NUMBER;
+    rate NUMBER;
+    interest NUMBER;
+    total NUMBER;
+BEGIN
+    
+    acc_no := your_account_number;
+    SELECT account_no, deposit, period, balance
+    INTO acc_no, deposit, period, balance
+    FROM account
+    WHERE account_no = acc_no;
+    IF balance < 10000 THEN
+        rate := 5;
+    ELSIF balance BETWEEN 10000 AND 50000 THEN
+        IF period < 3 THEN
+            rate := 7;
+        ELSE
+            rate := 8;
+        END IF;
+    ELSE
+        IF period < 3 THEN
+            rate := 8.5;
+        ELSE
+            rate := 9;
+        END IF;
+    END IF;
+    interest := deposit * period * rate / 100;
+    total := deposit + interest;
+    DBMS_OUTPUT.PUT_LINE('Account Number: ' || acc_no);
+    DBMS_OUTPUT.PUT_LINE('Deposit: ' || deposit);
+    DBMS_OUTPUT.PUT_LINE('Interest: ' || interest);
+    DBMS_OUTPUT.PUT_LINE('Total: ' || total);
+END;
+/
