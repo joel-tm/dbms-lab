@@ -18,3 +18,154 @@ INSERT INTO deposit9438 values(103, 'meena', 'b3', 9000, '10-jan-14');
 INSERT INTO deposit9438 values(104, 'rajan', 'b2', 5000, '12-apr-15');
 
  INSERT INTO deposit9438 values(105, 'kumar', 'b1', 14000, '25-may-15');
+
+
+SQL> INSERT INTO loan9295 VALUES(200, 'anil', 'b1', 25000, '10-oct-14');
+
+  1 row created.
+
+  SQL>  INSERT INTO loan9295 VALUES(201, 'joseph', 'b1', 30000, '11-mar-14');
+
+  1 row created.
+
+  SQL> INSERT INTO loan9295 VALUES(202, 'meena', 'b3', 50000, '18-feb-15');
+
+  1 row created.
+ 
+  SQL>  INSERT INTO loan9295 VALUES(203, 'rani', 'b2', 18000, '23-mar-15');
+
+  1 row created.
+
+  SQL>  INSERT INTO loan9295 VALUES(204, 'reena', 'b2', 17000, '27-may-15');
+
+  1 row created.
+
+a.SQL> UPDATE deposit9295 SET balance = balance + balance * 0.1  WHERE ldate < '1-jan-14';
+
+0 rows updated.
+
+b.SQL> UPDATE deposit9295 SET ldate = '24-may-15' WHERE acc_no = 104;
+
+1 row updated.
+
+
+c.SQL> UPDATE loan9295 SET name = INITCAP(name);
+
+5 rows updated.
+
+d.SQL> SELECT acc_no, SUBSTR(name, 1, 3) FROM deposit9295;
+
+    ACC_NO SUB
+---------- ---
+       100 Ani
+       101 jos
+       102 she
+       103 mee
+       104 raj
+       105 kum
+
+6 rows selected.
+
+--------------------------
+e.SQL> select * from deposit9295 where sysdate-ldate>365;
+
+    ACC_NO NAME            BNAME              BALANCE LDATE
+---------- --------------- --------------- ---------- ---------
+       100 Anil            b1                    8000 10-MAY-15
+       101 jose            b1                   17000 17-JUN-15
+       102 sheela          b2                    6000 18-OCT-14
+       103 meena           b3                    9000 10-JAN-14
+       104 rajan           b2                    5000 12-APR-15
+       105 kumar           b1                   14000 25-MAY-15
+
+6 rows selected.
+
+f.SQL> UPDATE deposit9295 SET LDATE = TO_DATE('10-JAN-14 10:00:00', 'DD-MON-YY HH:MI:SS') WHERE ACC_NO = 103;
+
+1 row updated.
+
+g.SQL> SELECT ACC_NO,NAME, TO_CHAR(LDATE, 'DD-MON-YY HH:MI:SS') AS LDATE_TIME FROM deposit9295 WHERE ACC_NO = 103;
+
+    ACC_NO NAME            LDATE_TIME
+---------- --------------- ------------------
+       103 meena           10-JAN-14 10:00:00
+
+h.SQL> SELECT COUNT(*) FROM deposit9295 WHERE BNAME = 'b1' AND BALANCE > 1000;
+
+  COUNT(*)
+----------
+         3
+
+i.SQL> SELECT BNAME, AVG(BALANCE) AS AVG_BALANCE FROM deposit9295 GROUP BY BNAME;
+
+BNAME           AVG_BALANCE
+--------------- -----------
+b2                     5500
+b1                    13000
+b3                     9000
+
+
+
+
+
+
+
+
+
+
+
+
+
+j.SQL> SELECT * FROM deposit9295 ORDER BY BALANCE ASC;
+
+    ACC_NO NAME            BNAME              BALANCE LDATE
+---------- --------------- --------------- ---------- ---------
+       104 rajan           b2                    5000 24-MAY-15
+       102 sheela          b2                    6000 18-OCT-14
+       100 Anil            b1                    8000 10-MAY-15
+       103 meena           b3                    9000 10-JAN-14
+       105 kumar           b1                   14000 25-MAY-15
+       101 jose            b1                   17000 17-JUN-15
+
+6 rows selected.
+
+k.SQL> SELECT * FROM loan9295 ORDER BY NAME DESC;
+
+   LOAN_NO NAME            BNAME               AMOUNT LLDATE
+---------- --------------- --------------- ---------- ---------
+       204 Reena           b2                   17000 27-MAY-15
+       203 Rani            b2                   18000 23-MAR-15
+       202 Meena           b3                   50000 18-FEB-15
+       201 Joseph          b1                   30000 11-MAR-14
+       200 Anil            b1                   25000 10-OCT-14
+
+l.SQL> SELECT AVG(balance) AS average_balance, MAX(balance) AS maximum_balance, SUM(balance) AS total_
+balance FROM deposit9295 WHERE bname = 'b1';
+
+AVERAGE_BALANCE MAXIMUM_BALANCE TOTAL_BALANCE
+--------------- --------------- -------------
+          13000           17000         39000
+
+m.SQL> INSERT INTO deposit9295 values(106, 'user', 'b1', 14000, '25-JUN-15');
+
+1 row created.
+
+n.SQL> DELETE FROM deposit9295 WHERE acc_no = 106;
+
+1 row deleted.
+
+o.SQL> CREATE TABLE deposit1 AS (SELECT * FROM deposit9295);
+
+Table created.
+
+p.SQL> drop table deposit9295;
+
+Table dropped.
+
+q.SQL> ALTER TABLE deposit1 RENAME TO deposit9295;
+
+Table altered.
+
+r.SQL>  CREATE TABLE deposit2 AS select acc_no,name,balance from deposit92952;
+
+Table created.
